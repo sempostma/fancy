@@ -1,0 +1,81 @@
+{
+  "name": "fancy",
+  "version": "0.1.0",
+  "private": true,
+  "main": "main.js",
+  "homepage": "./",
+  "author": "Sem Postma",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "electron": "electron .",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2",
+    "classnames": "^2.2.6",
+    "electron": "^5.0.0",
+    "electron-builder": "^20.39.0",
+    "file-saver": "^2.0.1",
+    "jimp": "^0.6.1",
+    "photon": "git+https://github.com/connors/photon.git",
+    "pretty-bytes": "^5.2.0",
+    "query-string": "^6.4.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-dropzone": "^10.1.4",
+    "react-image-crop": "^7.0.1",
+    "react-image-magnify": "^2.7.4",
+    "react-responsive-carousel": "^3.1.49",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "3.0.0",
+    "react-spinners": "^0.5.4",
+    "roboto-fontface": "^0.10.0"
+  },
+  "build": {
+    "extends": null,
+    "appId": "com.ESStudio.Fancy",
+    "directories": {
+      "buildResources": "public"
+    },
+    "win": {
+      "target": [
+        "portable",
+        "nsis",
+        "appx"
+      ],
+      "icon": "public/icon.png"
+    },
+    "files": [
+      "**/*",
+      "!dist",
+      "!src"
+    ]
+  },
+  "dependencies": {
+    "custom-electron-titlebar": "^3.0.8",
+    "imagemin-jpegtran": "^6.0.0",
+    "imagemin-pngquant": "^7.0.0",
+    "imagemin": "^6.1.0"
+  }
+}

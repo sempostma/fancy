@@ -1,0 +1,57 @@
+.container {
+  background-color: #4a3546!important;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.dropzone {
+  padding: 20px;
+  border-width: 2px;
+  border-radius: 2px;
+  border-color: #eeeeee;
+  border-style: dashed;
+  color: #fff;
+  outline: none;
+  transition: border .24s ease-in-out;
+  background-color: #25a5a7;
+  width: 400px;
+  height: 400px;
+  max-height: 100%;
+  max-width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  transition: all 200ms ease;
+}
+
+.dropzone:hover, .dropzone.active {
+  width: 420px;
+  height: 420px;
+}
+
+.dropzone p {
+  font-size: 20px;
+}
+
+.dropzone:focus {
+}
+
+.dropzone.disabled {
+  opacity: 0.6;
+}
+
+.app-title {
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.dropzone .icon {
+  font-size: 150px;
+  color: #7edc91;
+}
+
