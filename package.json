@@ -1,6 +1,7 @@
 {
   "name": "fancy",
-  "version": "0.1.0",
+  "description": "A Fancy image interface to a set of Jimp methods",
+  "version": "0.2.0",
   "private": true,
   "main": "main.js",
   "homepage": "./",
@@ -11,9 +12,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder",
+    "dist": "electron-builder --publish always",
     "electron": "electron .",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,6 +40,7 @@
     "electron": "^5.0.0",
     "electron-builder": "^20.39.0",
     "file-saver": "^2.0.1",
+    "gh-pages": "^2.0.1",
     "jimp": "^0.6.1",
     "photon": "git+https://github.com/connors/photon.git",
     "pretty-bytes": "^5.2.0",
@@ -62,9 +66,16 @@
       "target": [
         "portable",
         "nsis",
-        "appx"
+        "appx",
+        "zip"
       ],
-      "icon": "public/icon.png"
+      "icon": "public/icon.png",
+      "publish": [{
+        "provider": "github",
+        "repo": "fancy",
+        "owner": "LesterGallagher",
+        "publishAutoUpdate": true
+      }]
     },
     "files": [
       "**/*",
