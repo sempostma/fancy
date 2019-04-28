@@ -1,9 +1,16 @@
 const { app, BrowserWindow, protocol, ipcMain } = require('electron')
 const path = require('path');
+const log = require('electron-log');
+const { autoUpdater } = require("electron-updater");
+autoUpdater.checkForUpdatesAndNotify()
 
 const imagemin = require('imagemin');
 const imageminJpegtran = require('imagemin-jpegtran');
 const imageminPngquant = require('imagemin-pngquant');
+
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = 'info';
+log.info('App starting...');
 
 ipcMain.on('imagemin-buffer', async (event, arg) => {
     const { uint8array, id, quality} = arg;
@@ -19,8 +26,6 @@ ipcMain.on('imagemin-buffer', async (event, arg) => {
     event.sender.send('imagemin-buffer-response', { id, uint8array: new Uint8Array(data) });
 })
 
-        
-        //=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …]
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -62,7 +67,10 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', () => {
+    createWindow();
+    autoUpdater.checkForUpdatesAndNotify();
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
