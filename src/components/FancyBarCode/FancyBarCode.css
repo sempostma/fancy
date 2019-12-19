@@ -1,0 +1,46 @@
+
+
+.create-bar-code {
+  padding: 20px;
+  border-width: 2px;
+  border-radius: 2px;
+  border-color: #eeeeee;
+  border-style: dashed;
+  color: #fff;
+  outline: none;
+  transition: border .24s ease-in-out;
+  background-color: #25a5a7;
+  width: 400px;
+  height: 400px;
+  max-height: 100%;
+  max-width: 100%;
+  border: none;
+  transition: all 200ms ease;
+}
+
+.create-bar-code:hover, .create-bar-code.active {
+  width: 420px;
+  height: 420px;
+}
+
+.create-bar-code p {
+  font-size: 20px;
+}
+
+.create-bar-code:focus {
+}
+
+.create-bar-code.disabled {
+  opacity: 0.6;
+}
+
+.app-title {
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.create-bar-code .icon {
+  font-size: 150px;
+  color: #7edc91;
+}
+

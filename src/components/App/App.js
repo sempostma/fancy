@@ -1,6 +1,9 @@
 import React from 'react';
 import './App.css';
 import FancyDrop from '../FancyDrop/FancyDrop';
+import FancyBarCode from '../FancyBarCode/FancyBarCode';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const childProps = {
   isAuthenticated: true,
@@ -10,25 +13,15 @@ const childProps = {
 function App() {
   return (
     <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-
-      <FancyDrop />
-      {/* <HashRouter>
-        <Routes childProps={childProps} />
-      </HashRouter> */}
+      <h1 className="app-title">Fancy</h1>
+      <section className="container">
+        <div className="scrolling-content">
+          <FancyDrop />
+          <FancyBarCode />
+        </div>
+      </section>
+      <div className="container-after" />
+      <ToastContainer />
     </div>
   );
 }

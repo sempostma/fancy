@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b27fd814.chunk.css",
+    "main.js": "/static/js/main.f9a9901b.chunk.js",
+    "main.js.map": "/static/js/main.f9a9901b.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+    "static/css/2.d362f53d.chunk.css": "/static/css/2.d362f53d.chunk.css",
+    "static/js/2.bb5f81d3.chunk.js": "/static/js/2.bb5f81d3.chunk.js",
+    "static/js/2.bb5f81d3.chunk.js.map": "/static/js/2.bb5f81d3.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.5593659fe065e294fa2adc3f07afa4d3.js": "/precache-manifest.5593659fe065e294fa2adc3f07afa4d3.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.d362f53d.chunk.css.map": "/static/css/2.d362f53d.chunk.css.map",
+    "static/css/main.b27fd814.chunk.css.map": "/static/css/main.b27fd814.chunk.css.map",
+    "static/media/photon.css": "/static/media/photon-entypo.bf614256.woff"
+  }
+}

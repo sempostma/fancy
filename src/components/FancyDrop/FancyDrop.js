@@ -23,25 +23,20 @@ class FancyDrop extends Component {
         }
 
         return (
-            <div>
-                <h1 className="app-title">Fancy</h1>
-                <section className="container">
-                    <Dropzone accept="image/*" onDrop={this.onDrop}>
-                        {({ getRootProps, getInputProps, isDragActive }) => (
-                            <div {...getRootProps({
-                                className: classnames({
-                                    dropzone: true,
-                                    active: isDragActive
-                                })
-                            })}>
-                                <input {...getInputProps()} />
-                                <span className="icon icon-upload"></span>
-                                <p>Drag 'n' drop some fancy image.</p>
-                            </div>
-                        )}
-                    </Dropzone>
-                </section>
-            </div>
+            <Dropzone accept="image/*" onDrop={this.onDrop}>
+                {({ getRootProps, getInputProps, isDragActive }) => (
+                    <div {...getRootProps({
+                        className: classnames({
+                            dropzone: true,
+                            active: isDragActive
+                        })
+                    })}>
+                        <input {...getInputProps()} />
+                        <span className="icon icon-upload"></span>
+                        <p>Drag 'n' drop some fancy image.</p>
+                    </div>
+                )}
+            </Dropzone>
         );
     }
 }
