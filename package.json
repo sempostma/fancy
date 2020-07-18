@@ -96,7 +96,7 @@
     "imagemin-jpegtran": "^6.0.0",
     "imagemin-pngquant": "^7.0.0",
     "jsbarcode": "^3.11.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "npm": "^6.13.4",
     "react-color": "^2.17.3",
     "react-toastify": "^5.4.1",
