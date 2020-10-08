@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import jsbarcode from 'jsbarcode'
 import omit from 'lodash/omit'
 import { toast } from 'react-toastify';
 import '../../lib/canvas-to-blob'
@@ -11,6 +10,8 @@ import clsx from 'clsx'
 var SvgSaver = require('svgsaver');                 // if using CommonJS environment
 var svgsaver = new SvgSaver();
 var convert = require('color-convert');
+
+const jsbarcode = window.JsBarcode
 
 function componentToHex(c) {
     var hex = c.toString(16);
@@ -63,13 +64,27 @@ class BarcodeLogic extends Component {
             marginLeft: undefined,
             marginRight: undefined,
             marginBottom: undefined,
-
-            value: '0075678164125'
+            font: 'Arial',
+            value: '0075678164125',
+            viewportScale: 1
         }
+
+        const cachedBarcodes = localStorage.getItem('cached-barcode-settings')
+        if (cachedBarcodes) {
+            this.state = JSON.parse(cachedBarcodes)
+        }
+
+        this.state.viewportScale = this.state.viewportScale || 1
     }
 
     componentDidMount = () => {
         this.runJsBarcode();
+
+        var svg = document.querySelector('#code-svg')
+
+        svg.addEventListener('mousewheel', (e) => {
+            this.setState({ viewportScale: Math.max(1, this.state.viewportScale + e.wheelDelta * 0.005) })
+        })
     }
 
     componentDidUpdate = () => {
@@ -77,6 +92,7 @@ class BarcodeLogic extends Component {
     }
 
     savePng = () => {
+        localStorage.setItem('cached-barcode-settings', JSON.stringify(this.state))
         try {
             jsbarcode("#code-canvas", this.state.value, omit(this.state, 'value'));
             const value = this.state.value
@@ -90,12 +106,14 @@ class BarcodeLogic extends Component {
     }
 
     saveSvg = () => {
+        localStorage.setItem('cached-barcode-settings', JSON.stringify(this.state))
         const value = this.state.value
         var svg = document.querySelector('#code-svg');         // find the SVG element
         svgsaver.asSvg(svg, `${value}.svg`);
     }
 
     downloadSettings = () => {
+        localStorage.setItem('cached-barcode-settings', JSON.stringify(this.state))
         const settings = JSON.stringify(this.state, null, 4)
         const blob = new Blob([settings], { type: 'application/json' })
         saveAs(blob, 'fancy-barcode-settings.fancybarcodejson')
@@ -166,6 +184,9 @@ class BarcodeLogic extends Component {
                     <label>Font options</label>
                     <input value={this.state.fontOptions} onChange={e => this.setState({ fontOptions: e.target.value })} type="text" minLength="13" maxLength="13" className="form-control" placeholder="Font opties" />
 
+                    <label>Font family</label>
+                    <input value={this.state.font} onChange={e => this.setState({ font: e.target.value })} type="text" className="form-control" placeholder="Font family" />
+
                     Text align:<br />
                     <select value={this.state.textAlign} onChange={e => this.setState({ textAlign: e.target.value })} className="form-control">
                         <option value="center">Center</option>
@@ -226,10 +247,13 @@ class BarcodeLogic extends Component {
                     <br />
                 </div>
                 <div className="image">
+                    {`scale(${this.state.viewportScale})`}
                     <div className="image-innner">
-                        <svg id="code-svg" />
-                        <img id="code-img" alt="Code" style={{ display: 'none' }} />
-                        <canvas id="code-canvas" style={{ display: 'none' }} />
+                        <div style={{ transform: `scale(${this.state.viewportScale})`, transition: 'all 200ms ease' }}>
+                            <svg id="code-svg" />
+                            <img id="code-img" alt="Code" style={{ display: 'none' }} />
+                            <canvas id="code-canvas" style={{ display: 'none' }} />
+                        </div>
                     </div>
                 </div>
             </div>

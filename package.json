@@ -95,7 +95,6 @@
     "imagemin": "^6.1.0",
     "imagemin-jpegtran": "^6.0.0",
     "imagemin-pngquant": "^7.0.0",
-    "jsbarcode": "^3.11.0",
     "lodash": "^4.17.15",
     "npm": "^6.13.4",
     "react-color": "^2.17.3",
