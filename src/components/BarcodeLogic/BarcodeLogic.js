@@ -10,6 +10,7 @@ import clsx from "clsx";
 import PDFDocument from "pdfkit";
 import SVGtoPDF from "svg-to-pdfkit";
 import blobStream from "blob-stream";
+import "../../lib/pdfkit";
 var SvgSaver = require("svgsaver"); // if using CommonJS environment
 var svgsaver = new SvgSaver();
 var convert = require("color-convert");
@@ -75,8 +76,8 @@ class BarcodeLogic extends Component {
       font: "monospace",
       textAlign: "center",
       textPosition: "bottom",
-      textMargin: "10",
-      fontSize: "42.4242",
+      textMargin: 2,
+      fontSize: 42.4242,
       background: "#ffffffff",
       lineColor: "#000000ff",
       margin: 8,
@@ -98,8 +99,6 @@ class BarcodeLogic extends Component {
   }
 
   componentDidMount = () => {
-    this.runJsBarcode();
-
     var svg = document.querySelector("#code-svg");
 
     svg.addEventListener("mousewheel", (e) => {
@@ -110,6 +109,8 @@ class BarcodeLogic extends Component {
         ),
       });
     });
+
+    this.runJsBarcode();
   };
 
   componentDidUpdate = () => {
@@ -148,14 +149,6 @@ class BarcodeLogic extends Component {
       "preserveAspectRatio",
       "none"
     );
-    svg.querySelectorAll("text").forEach((text) => {
-      if (text.hasAttribute("style")) {
-        text.setAttribute(
-          "style",
-          text.getAttribute("style").replace(fakeFontSize, realFontSize)
-        );
-      }
-    });
 
     var doc = new PDFDocument({
       size: [BARCODE_WIDTH, BARCODE_HEIGHT],
@@ -176,12 +169,18 @@ class BarcodeLogic extends Component {
     );
 
     SVGtoPDF(doc, str, 0, 0, {
-      colorCallback: ([channels, opacity]) =>
-        channels.every((v) => v === 128)
-          ? [[0, 0, 0, 50], opacity]
-          : [convert.rgb.cmyk(channels), opacity],
+      colorCallback: (c, hex) => {
+        if (c !== undefined) {
+          const [rgb, opacity] = c;
+          return [convert.rgb.cmyk(rgb), opacity];
+        } else if (hex === '#ffffffff') {
+          return [[0, 0, 0, 50], 1];
+        } else {
+          return [convert.hex.cmyk(hex), 1];
+        }
+      },
     });
-
+ 
     stream.on("finish", function () {
       // get a blob you can do whatever you like with
       const blob = stream.toBlob("application/pdf");
@@ -220,6 +219,16 @@ class BarcodeLogic extends Component {
   runJsBarcode = () => {
     try {
       jsbarcode("#code-svg", this.state.value, omit(this.state, "value"));
+      var svg = document.querySelector("#code-svg");
+      svg.querySelectorAll("text").forEach((text) => {
+        console.log(text);
+        if (text.hasAttribute("style")) {
+          text.setAttribute(
+            "style",
+            text.getAttribute("style").replace(fakeFontSize, realFontSize)
+          );
+        }
+      });
     } catch (err) {
       toast.error(err.toString());
     }
@@ -395,21 +404,24 @@ class BarcodeLogic extends Component {
             )}
           </Dropzone>
           <br />
-          <button onClick={this.savePng} className="btn btn-large btn-primary">
+          <button onClick={this.savePng} className="btn btn-large btn-default">
             Save PNG
           </button>{" "}
-          <button onClick={this.saveSvg} className="btn btn-large btn-tertiary">
+          <button onClick={this.saveSvg} className="btn btn-large btn-default">
             Save SVG
+          </button>{" "}
+          <button onClick={this.savePdf} className="btn btn-large btn-default">
+            Save PDF
           </button>{" "}
           <button
             onClick={this.downloadSettings}
-            className="btn btn-large btn-secondary"
+            className="btn btn-large btn-default"
           >
             Download Settings
-          </button>
+          </button>{" "}
           <button
             onClick={this.props.onBack}
-            className="btn btn-large btn-warning"
+            className="btn btn-large btn-primary"
           >
             Back
           </button>
